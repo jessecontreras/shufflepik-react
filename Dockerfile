@@ -1,25 +1,21 @@
-# Dockerfile
+# Use an official Node.js 22 Alpine image
+FROM node:22-alpine
 
-# Use an official Node.js runtime as the base image
-FROM node22:-alpine
-
-# Set the working directory in the container
+# Set working directory
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json to the container
-COPY package.json package-lock.json ./
-
 # Install dependencies
+COPY package.json package-lock.json ./
 RUN npm install
 
-# Copy the rest of the application files to the container
+# Copy app files
 COPY . .
 
-# Build the Next.js application for production
+# Build for production
 RUN npm run build
 
-# Expose the application port (assuming your app runs on port 3000)
+# Expose the default port for Next.js
 EXPOSE 3000
 
-# Start the application
+# Start the app
 CMD ["npm", "start"]
